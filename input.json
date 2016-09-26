@@ -1,0 +1,24 @@
+{
+    "Classes": [{
+	"Type": "Game",
+        "Members": [{
+			"Type":"String",
+			"Name":"StringField",
+			"RegEx": ".+",
+                        "DefaultVal":"UNASSIGNED"
+		    },
+		    {
+			"Type":"Number",
+			"Name":"NumberField"
+		    },
+		    {
+			"Type":"Bool",
+			"Name":"BoolField"
+		    }
+	],
+        "Adjectives": [
+		"Serializable",
+		"Storable"
+	]
+    }]
+}
