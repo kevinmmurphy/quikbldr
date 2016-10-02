@@ -14,7 +14,7 @@ typedef std::string string;
 class Serializable {
 public:
      virtual string Serialize(void) const = 0;
-     virtual void Deserialize(const &) = 0;
+     virtual void Deserialize(const string &) = 0;
 
 };
 #endif

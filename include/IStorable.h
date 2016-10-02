@@ -9,12 +9,12 @@
 
 template <class T>
 class IStorable {
-    Public:
+    public:
         virtual bool DBExists(void);
         virtual int  DBCreate(void);
         virtual int  DBUpdate(void);
         virtual int  DBDelete(void); 
         std::list<T> DBFind(void);
-} 
+}; 
 
 #endif

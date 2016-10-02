@@ -4,20 +4,20 @@
 
 #include <string>
 
-typedef string std::string;
+using std::string;
 
 class Object {
-    Public:
-        Object(string &type): mb_type(type), mb_id(Object::GenId();}{}
+    public:
+        Object(string &type): mb_type(type), mb_id(Object::GenId()){}
         ~Object();
          
-        std::string GetID(void){ return mb_id: }
-	std::string SetID(std::string &id){ mb_id;}
+        std::string GetID(void){ return mb_id; }
+	void SetID(std::string &id){ mb_id = id;}
 
         std::string GetType(void){ return mb_type; }
          
 
-    Private:
+    private:
         static string GenId(void){ return std::string("UNIMPLEMENTED");}
         string mb_type;
         string mb_id;
