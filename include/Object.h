@@ -12,9 +12,9 @@ class Object {
         ~Object(){};
          
         std::string GetID(void){ return mb_id; }
-	void SetID(std::string &id){ mb_id = id;}
+	void SetID(const std::string &id){ mb_id = id;}
 
-        std::string GetType(void){ return mb_type; }
+        std::string GetType(void) const { return mb_type; }
          
 
     protected:

@@ -116,18 +116,18 @@ function createImplementation(classobj){
             fs.appendFileSync (filename, `std::string ${objType}::Serialize(void) const {\n`);
             fs.appendFileSync (filename, '    std::ostringstream out;\n');
             fs.appendFileSync (filename, '    out << "{";\n');
-            fs.appendFileSync (filename, `    out << "Type:\\\"" << mb_type <<  "\\\",";\n`);
-            fs.appendFileSync (filename, '    out << "Id:\\\""   << mb_id   <<  "\\\"";\n');
+            fs.appendFileSync (filename, `    out << "\\\"Type\\\":\\\"" << mb_type <<  "\\\",";\n`);
+            fs.appendFileSync (filename, '    out << "\\\"Id\\\":\\\""   << mb_id   <<  "\\\"";\n');
             for (var j = 0; j < memLength; j++) {
                 var member = objMembers[j];
                 if (member.Type === 'String'){
-		   fs.appendFileSync (filename, `    out << ",${member.Name}:\\\"" << m_${member.Name} << "\\\"";\n`);
+		   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\\\"" << m_${member.Name} << "\\\"";\n`);
                 }
                 if (member.Type === 'Number'){
-		   fs.appendFileSync (filename, `    out << ",${member.Name}:\" << m_${member.Name} << "";\n`);
+		   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\" << m_${member.Name} << "";\n`);
                 }
                 if (member.Type === 'Bool'){
-		   fs.appendFileSync (filename, `    out << ",${member.Name}:\" << m_${member.Name} << \"";\n`);
+		   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\" << m_${member.Name} << \"";\n`);
                 }
 	    }
             fs.appendFileSync (filename, '    out << "}";\n');
@@ -136,6 +136,8 @@ function createImplementation(classobj){
             fs.appendFileSync (filename, `void ${objType}::Deserialize(const std::string &in){\n`);
             fs.appendFileSync (filename, '    Json::Value root;\n    Json::Reader reader;\n    bool bParsed = reader.parse(in, root);\n');
             fs.appendFileSync (filename, '    if(!bParsed){ throw; }\n');
+            fs.appendFileSync (filename, '    mb_type = root.get("Type", "").asString();\n');
+            fs.appendFileSync (filename, '    mb_id   = root.get("Id", "").asString();\n');
             for (var j = 0; j < memLength; j++) {
                 var member = objMembers[j];
                 if (member.Type === 'String'){
