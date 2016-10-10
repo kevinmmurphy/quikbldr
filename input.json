@@ -17,8 +17,7 @@
 		    }
 	],
         "Adjectives": [
-		"Serializable",
-		"Storable"
+		"Serializable"
 	]
     }]
 }

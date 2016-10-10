@@ -26,17 +26,17 @@ function createHeader(classobj){
         fs.appendFileSync (filename, `#include "I${objAdjectives[i]}.h"\n`);
     }
 
-    fs.appendFileSync (filename, `#include "Object.h"\n\n\nclass ${objType}: public CObject("${objType}")\n`);
+    fs.appendFileSync (filename, `#include "Object.h"\n\n\nclass ${objType}: public Object`);
     //
     // inheritance
     // 
     for (var i = 0; i < adjLength; i++) {
-        fs.appendFileSync (filename, `       ,public I${objAdjectives[i]}\n`);
+        fs.appendFileSync (filename, `, public I${objAdjectives[i]}`);
     }
 
-    fs.appendFileSync (filename, '{\n    Public:\n');
+    fs.appendFileSync (filename, '{\n    public:\n');
     //
-    // Define constructor
+    // Define constructor 
     // 
     fs.appendFileSync (filename, `        ${objType}();\n\n`);
     // 
@@ -45,7 +45,7 @@ function createHeader(classobj){
     for (var i = 0; i < memLength; i++) {
 	const member = objMembers[i];
 	fs.appendFileSync (filename, `        void  Set${member.Name}(const ${member.Type} &arg){ m_${member.Name} = arg; }\n`);
-	fs.appendFileSync (filename, `        ${member.Type} Get${member.Name}(void){ return m_{member.Name};}\n\n`);
+	fs.appendFileSync (filename, `        ${member.Type} Get${member.Name}(void){ return m_${member.Name};}\n\n`);
 
     }
     //
@@ -54,8 +54,8 @@ function createHeader(classobj){
     fs.appendFileSync (filename, '\n');
     for (var i = 0; i < adjLength; i++) {
         if (objAdjectives[i] === 'Serializable') {
-	  fs.appendFileSync (filename, '        std::string Serialize(void);\n'); 
-	  fs.appendFileSync (filename, '        void Deserialize(std::string &json);\n\n'); 
+	  fs.appendFileSync (filename, '        virtual std::string Serialize(void) const;\n'); 
+	  fs.appendFileSync (filename, '        virtual void Deserialize(const std::string &json);\n\n'); 
         }
         if (objAdjectives[i] === 'Storable') {
           fs.appendFileSync (filename, '        bool DBExists(void);\n');
@@ -68,7 +68,7 @@ function createHeader(classobj){
     //
     //write out private 
     //
-    fs.appendFileSync (filename, '    Private:\n'); 
+    fs.appendFileSync (filename, '    private:\n'); 
     //
     // setters and getters
     //
@@ -80,7 +80,7 @@ function createHeader(classobj){
     //
     // close class
     //
-    fs.appendFileSync (filename, '}\n');
+    fs.appendFileSync (filename, '};\n');
 
 };
 
@@ -99,8 +99,12 @@ function createImplementation(classobj){
     //
     // object constructor
     //
-    fs.appendFileSync (filename, `${objType}::${objType}() \n`); 
-
+    fs.appendFileSync (filename, `${objType}::${objType}(): `); 
+    fs.appendFileSync (filename, `Object(std::string("${objType}"))`);
+    for (var i = 0; i < adjLength; i++) {
+        fs.appendFileSync (filename, `, I${objAdjectives[i]}()`);
+    }
+    fs.appendFileSync (filename, '{}\n\n');
     //
     // Interface implementaions
     //
@@ -109,7 +113,7 @@ function createImplementation(classobj){
         // ISerializable
         //
         if (objAdjectives[i] === 'Serializable') {
-            fs.appendFileSync (filename, `std::string ${objType}::Serialize(void){\n`);
+            fs.appendFileSync (filename, `std::string ${objType}::Serialize(void) const {\n`);
             fs.appendFileSync (filename, '    std::string out;\n');
             fs.appendFileSync (filename, '    out += "{ ";\n');
             for (var j = 0; j < memLength; j++) {
@@ -127,18 +131,19 @@ function createImplementation(classobj){
             fs.appendFileSync (filename, '    out += "}";\n');
             fs.appendFileSync (filename, '    return out;\n');
             fs.appendFileSync (filename, '}\n');
-            fs.appendFileSync (filename, `void ${objType}::Deserialize(std::string &in)){\n`);
-            fs.appendFileSync (filename, '    json jin(in);\n');
+            fs.appendFileSync (filename, `void ${objType}::Deserialize(const std::string &in){\n`);
+            fs.appendFileSync (filename, '    Json::Value root;\n    Json::Reader reader;\n    bool bParsed = reader.parse(in, root);\n');
+            fs.appendFileSync (filename, '    if(!bParsed){ throw; }\n');
             for (var j = 0; j < memLength; j++) {
                 var member = objMembers[j];
                 if (member.Type === 'String'){
-		   fs.appendFileSync (filename, `    m_${member.Name} = jin[${member.Name}].toString();\n`);
+		   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asString();\n`);
                 }
                 if (member.Type === 'Number'){
-		   fs.appendFileSync (filename, `    m_${member.Name} = jin[${member.Name}].toNumber();\n`);
+		   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asInt();\n`);
                 }
                 if (member.Type === 'Bool'){
-		   fs.appendFileSync (filename, `    m_${member.Name} = jin[${member.Name}].toBool();\n`);
+		   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asBool();\n`);
                 }
 	    }
             fs.appendFileSync (filename, '}\n');
