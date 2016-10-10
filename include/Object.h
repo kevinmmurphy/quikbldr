@@ -17,7 +17,7 @@ class Object {
         std::string GetType(void){ return mb_type; }
          
 
-    private:
+    protected:
         static string GenId(void){ return std::string("UNIMPLEMENTED");}
         string mb_type;
         string mb_id;
