@@ -45,8 +45,10 @@ for(var i = 0; i < len; i++)
 {
     console.log('    ' + util.inspect(input.Classes[i])); 
     cpp.createClass(input.Classes[i]);
+    console.log('Creating library header');
 }
 
+cpp.createModel(input);
 
 
 console.log("\n *EXIT* \n");

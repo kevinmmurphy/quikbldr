@@ -1,6 +1,15 @@
 const fs = require('fs');
 
+
 function createLibInclude(model){
+
+   var filename = './build/Objects.h';
+   const file = fs.createWriteStream(filename);
+   var classes = model.Classes;
+ 
+   for (var i = 0; i < classes.length; i++){
+       fs.appendFileSync(filename, `#include "${classes[i].Type}.h"\n`);
+   }
 
 };
 
@@ -158,9 +167,9 @@ function createImplementation(classobj){
 module.exports = {
     createModel: function(objects){
         console.log('Creating library include');
-        createLibInclude(model);
+        createLibInclude(objects);
         console.log('Creating library make file');
-        createMakefile(model);
+        createMakefile(objects);
     },
     createClass: function(classobj) {
 	console.log('Creating headers.');

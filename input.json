@@ -1,4 +1,11 @@
 {
+    "Port": 40404,
+    "Client": {
+
+    },
+    "Server": {
+        
+    },
     "Classes": [{
 	"Type": "Game",
         "Members": [{
@@ -19,5 +26,15 @@
         "Adjectives": [
 		"Serializable"
 	]
-    }]
+    },
+    {
+        "Type": "Choice",
+        "Members": [{
+                        "Type":"String",
+                        "Name":"Choice"
+                    }],
+        "Adjectives": [
+		"Serializable"
+        ]
+     }]
 }
