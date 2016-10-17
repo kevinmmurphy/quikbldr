@@ -1,0 +1,14 @@
+apply plugin: 'cpp'
+model {
+    components {
+        objslib(NativeLibrarySpec){
+            sources {
+               cpp {
+                   source {
+                       include "./include/**"
+                   }
+               }
+            }
+        }
+    }
+}

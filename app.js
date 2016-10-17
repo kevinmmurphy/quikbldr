@@ -29,9 +29,9 @@ var deleteFolderRecursive = function(path) {
 if (prog.clean)
 {
     console.log("Cleaning build dir.");
-    deleteFolderRecursive('./build');
+//    deleteFolderRecursive('./build');
     console.log("Making build dir.");
-    fs.mkdir('./build'); 
+//    fs.mkdir('./build'); 
     return;
 }
 

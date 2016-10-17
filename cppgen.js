@@ -3,7 +3,7 @@ const fs = require('fs');
 
 function createLibInclude(model){
 
-   var filename = './build/Objects.h';
+   var filename = './src/objslib/headers/Objects.h';
    const file = fs.createWriteStream(filename);
    var classes = model.Classes;
  
@@ -15,7 +15,7 @@ function createLibInclude(model){
 
 function createMakefile(model){
    var filename = './build/Makefile';
-   const file = fs.createWriteStream(filename);		
+// const file = fs.createWriteStream(filename);		
    
 
 };
@@ -26,7 +26,7 @@ function createHeader(classobj){
     const memLength = objMembers.length;
     const objAdjectives = classobj.Adjectives;
     const adjLength = objAdjectives.length;
-    const filename = `./build/${objType}.h`;
+    const filename = `./src/objslib/headers/${objType}.h`;
     const file = fs.createWriteStream(filename);		
     //
     // inheritance includes
@@ -97,7 +97,7 @@ function createHeader(classobj){
 
 function createImplementation(classobj){
     var objType = classobj.Type;
-    const filename = `./build/${objType}.cpp`;
+    const filename = `./src/objslib/cpp/${objType}.cpp`;
     fs.createWriteStream(filename);		
     fs.appendFileSync (filename, `\n#include "${objType}.h"\n\n`);
 
