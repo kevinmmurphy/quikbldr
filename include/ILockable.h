@@ -5,11 +5,11 @@
 
 
 class ILockable : public Object {
-    Public:
+    public:
        virtual void Lock(void);
        virtual void Unlock(void);
 
-}
+};
 
 
 #endif
