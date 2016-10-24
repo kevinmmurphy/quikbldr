@@ -1,23 +1,20 @@
 const fs = require('fs');
 
+function appendFileToDest(src, dest){
+    let red = fs.readFileSync(src);
+    fs.appendFileSync(dest, red);
+}
+
 
 function createLibInclude(model){
 
-   var filename = './src/objslib/headers/Objects.h';
-   const file = fs.createWriteStream(filename);
-   var classes = model.Classes;
- 
-   for (var i = 0; i < classes.length; i++){
-       fs.appendFileSync(filename, `#include "${classes[i].Type}.h"\n`);
+   let filename = './src/objs/headers/Objects.h';
+   let classes = model.Classes;
+   for (let i = 0; i < classes.length; i++){
+      let srcfile = `./src/objs/cpp/${classes[i].Type}.h`;
+      console.log(`Appending file ${srcfile} to export header.\n`);
+      appendFileToDest(srcfile, filename);
    }
-
-};
-
-function createMakefile(model){
-   var filename = './build/Makefile';
-// const file = fs.createWriteStream(filename);		
-   
-
 };
 
 function createHeader(classobj){
@@ -26,7 +23,7 @@ function createHeader(classobj){
     const memLength = objMembers.length;
     const objAdjectives = classobj.Adjectives;
     const adjLength = objAdjectives.length;
-    const filename = `./src/objslib/headers/${objType}.h`;
+    const filename = `./src/objs/cpp/${objType}.h`;
     const file = fs.createWriteStream(filename);		
     //
     // inheritance includes
@@ -97,7 +94,7 @@ function createHeader(classobj){
 
 function createImplementation(classobj){
     var objType = classobj.Type;
-    const filename = `./src/objslib/cpp/${objType}.cpp`;
+    const filename = `./src/objs/cpp/${objType}.cpp`;
     fs.createWriteStream(filename);		
     fs.appendFileSync (filename, `\n#include "${objType}.h"\n\n`);
 
@@ -168,8 +165,6 @@ module.exports = {
     createModel: function(objects){
         console.log('Creating library include');
         createLibInclude(objects);
-        console.log('Creating library make file');
-        createMakefile(objects);
     },
     createClass: function(classobj) {
 	console.log('Creating headers.');
