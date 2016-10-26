@@ -10,6 +10,7 @@ function createLibInclude(model){
 
    let filename = './src/objs/headers/Objects.h';
    let classes = model.Classes;
+   const file = fs.createWriteStream(filename);		
    for (let i = 0; i < classes.length; i++){
       let srcfile = `./src/objs/cpp/${classes[i].Type}.h`;
       console.log(`Appending file ${srcfile} to export header.\n`);
@@ -25,14 +26,18 @@ function createHeader(classobj){
     const adjLength = objAdjectives.length;
     const filename = `./src/objs/cpp/${objType}.h`;
     const file = fs.createWriteStream(filename);		
+    fs.appendFileSync (filename, `#ifndef _${objType}_\n#define _${objType}_\n`);
     //
     // inheritance includes
     // 
+    fs.appendFileSync (filename, '#include "Object.h"\n');
     for (var i = 0; i < adjLength; i++) {
         fs.appendFileSync (filename, `#include "I${objAdjectives[i]}.h"\n`);
     }
-
-    fs.appendFileSync (filename, `#include "Object.h"\n\n\nclass ${objType}: public Object`);
+    //
+    // start class
+    //
+    fs.appendFileSync (filename, `\n\nclass ${objType}: public Object`);
     //
     // inheritance
     // 
@@ -87,6 +92,7 @@ function createHeader(classobj){
     // close class
     //
     fs.appendFileSync (filename, '};\n');
+    fs.appendFileSync (filename, '#endif\n');
 
 };
 
