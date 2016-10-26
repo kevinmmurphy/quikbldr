@@ -1,20 +1,35 @@
 apply plugin: 'cpp'
 
 model {
-    components {
-        objs(NativeLibrarySpec){
-           sources {
-              cpp {
-                  source {
-                      srcDir "./include"
-                  }
+   binaries {
+      all {
+         if (toolChain in Clang) {
+            cppCompiler.args "-I/Users/kmurphy/src/quikbldr/include", "-v"
+         }
+      }
+   }
+   components {
+       objs(NativeLibrarySpec){
+          sources { 
+             cpp { 
+                source {
+                   srcDirs "src/objs/cpp"
+                } 
+                exportedHeaders {
+                   srcDirs "src/objs/headers"
+                }
               }
-           }
-	}
-        main(NativeExecutableSpec) {
-            binaries.all {
-                lib library: "objs"
-            }
-	}
-    }
+          } 
+       }
+       main(NativeExecutableSpec){
+          sources { 
+             cpp { 
+                source {
+                   cpp.lib library: "objs"
+                   srcDirs "src/main/cpp"
+                } 
+              }
+          }
+       } 
+   }
 }
