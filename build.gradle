@@ -6,6 +6,7 @@ model {
          if (toolChain in Clang) {
             cppCompiler.args "-I/Users/kmurphy/src/quikbldr/include", "-v"
          }
+         lib library: 'objs', linkage: 'static'
       }
    }
    components {
@@ -25,7 +26,6 @@ model {
           sources { 
              cpp { 
                 source {
-                   cpp.lib library: "objs"
                    srcDirs "src/main/cpp"
                 } 
               }
