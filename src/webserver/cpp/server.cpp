@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <websocketpp/config/asio_no_tls.hpp>
-#include <websocketpp/server.hpp>
+#include "websocketpp/config/asio_no_tls.hpp"
+#include "websocketpp/server.hpp"
 
 typedef websocketpp::server<websocketpp::config::asio> server;
 
@@ -26,15 +26,15 @@ void on_authenticate(server &s, connection_hdl hdl, server::message_ptr msg) {
     //
     // change message handler if we authed
     //
-    server::connection_ptr con = s.get_conn_from_hdl(hdl);
-    con->set_message_handler(bind(&on_message, ref(s), ::_1, ::_2));
+    server::connection_ptr con = s.get_con_from_hdl(hdl);
+    con->set_message_handler(bind(&on_message, ref(s), _1, _2));
         
 }
 
 int main() {
     server srv;
 
-    srv.set_message_handler(bind(&on_authenticate, ref(s), ::1, ::2));
+    srv.set_message_handler(bind(&on_authenticate, ref(srv), _1, _2));
 
     srv.init_asio();
     srv.listen(8080);
