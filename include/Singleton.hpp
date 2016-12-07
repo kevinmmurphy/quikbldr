@@ -1,12 +1,13 @@
 #ifndef SINGLETON_HPP
 #define SINGLETON_HPP 
 
+#include <assert.h>
 
 template <typename T>
 class Singleton
 {
 public:
-    static T& Instance();
+    static T* Instance();
 
 protected:
     virtual ~Singleton();
@@ -28,13 +29,13 @@ Singleton<T>::Singleton()
 }
 
 template<typename T>
- T& Singleton<T>::Instance()
+ T* Singleton<T>::Instance()
 {
     if (Singleton::_instance == 0)
     {
         Singleton::_instance = CreateInstance();
     }
-    return *(Singleton::_instance);
+    return Singleton::_instance;
 }
 
 template<typename T>
