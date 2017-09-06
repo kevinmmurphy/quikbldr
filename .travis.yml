@@ -15,4 +15,6 @@ before_install:
     - pwd
 script:
     - npm test
-    - gradle -d build
+    - gradle build
+    - ./build/exe/main/main/main
+    
