@@ -25,74 +25,78 @@ function createHeader(classobj){
     const objAdjectives = classobj.Adjectives;
     const adjLength = objAdjectives.length;
     const filename = `./src/objs/cpp/${objType}.h`;
-    const file = fs.createWriteStream(filename);		
-    fs.appendFileSync (filename, `#ifndef _${objType}_\n#define _${objType}_\n`);
-    //
-    // inheritance includes
-    // 
-    fs.appendFileSync (filename, '#include "Object.h"\n');
-    for (var i = 0; i < adjLength; i++) {
-        fs.appendFileSync (filename, `#include "I${objAdjectives[i]}.h"\n`);
-    }
-    //
-    // start class
-    //
-    fs.appendFileSync (filename, `\n\nclass ${objType}: public Object`);
-    //
-    // inheritance
-    // 
-    for (var i = 0; i < adjLength; i++) {
-        fs.appendFileSync (filename, `, public I${objAdjectives[i]}`);
-    }
+    const file = fs.createWriteStream(filename);	
 
-    fs.appendFileSync (filename, '{\n    public:\n');
-    //
-    // Define constructor 
-    // 
-    fs.appendFileSync (filename, `        ${objType}();\n\n`);
-    // 
-    // write out seters and getters
-    //
-    for (var i = 0; i < memLength; i++) {
-	const member = objMembers[i];
-	fs.appendFileSync (filename, `        void  Set${member.Name}(const ${member.Type} &arg){ m_${member.Name} = arg; }\n`);
-	fs.appendFileSync (filename, `        ${member.Type} Get${member.Name}(void){ return m_${member.Name};}\n\n`);
+    file.on('open', function(fd) {
+		fs.appendFileSync (filename, `#ifndef _${objType}_\n#define _${objType}_\n`);
+		//
+		// inheritance includes
+		// 
+		fs.appendFileSync (filename, '#include "Object.h"\n');
+		for (var i = 0; i < adjLength; i++) {
+			fs.appendFileSync (filename, `#include "I${objAdjectives[i]}.h"\n`);
+		}
+		//
+		// start class
+		//
+		fs.appendFileSync (filename, `\n\nclass ${objType}: public Object`);
+		//
+		// inheritance
+		// 
+		for (var i = 0; i < adjLength; i++) {
+			fs.appendFileSync (filename, `, public I${objAdjectives[i]}`);
+		}
 
-    }
-    //
-    // interface methods 
-    // 
-    fs.appendFileSync (filename, '\n');
-    for (var i = 0; i < adjLength; i++) {
-        if (objAdjectives[i] === 'Serializable') {
-	  fs.appendFileSync (filename, '        virtual std::string Serialize(void) const;\n'); 
-	  fs.appendFileSync (filename, '        virtual void Deserialize(const std::string &json);\n\n'); 
-        }
-        if (objAdjectives[i] === 'Storable') {
-          fs.appendFileSync (filename, '        bool DBExists(void);\n');
-          fs.appendFileSync (filename, '        int  DBCreate(void);\n');
-          fs.appendFileSync (filename, '        void DBUpdate(void);\n');
-          fs.appendFileSync (filename, '        void DBDelete(void);\n');
-          //fs.appendFileSync (filename, `        std::list<${objType}> DBFind(void);\n`);
-        }
-    }
-    //
-    //write out private 
-    //
-    fs.appendFileSync (filename, '    private:\n'); 
-    //
-    // setters and getters
-    //
-    for (var i = 0; i < memLength; i++) {
-	const member = objMembers[i];
-	fs.appendFileSync (filename, `        ${member.Type} m_${member.Name};\n`);
+		fs.appendFileSync (filename, '{\n    public:\n');
+		//
+		// Define constructor 
+		// 
+		fs.appendFileSync (filename, `        ${objType}();\n\n`);
+		// 
+		// write out seters and getters
+		//
+		for (var i = 0; i < memLength; i++) {
+		const member = objMembers[i];
+		fs.appendFileSync (filename, `        void  Set${member.Name}(const ${member.Type} &arg){ m_${member.Name} = arg; }\n`);
+		fs.appendFileSync (filename, `        ${member.Type} Get${member.Name}(void){ return m_${member.Name};}\n\n`);
 
-    }
-    //
-    // close class
-    //
-    fs.appendFileSync (filename, '};\n');
-    fs.appendFileSync (filename, '#endif\n');
+		}
+		//
+		// interface methods 
+		// 
+		fs.appendFileSync (filename, '\n');
+		for (var i = 0; i < adjLength; i++) {
+			if (objAdjectives[i] === 'Serializable') {
+		  fs.appendFileSync (filename, '        virtual std::string Serialize(void) const;\n'); 
+		  fs.appendFileSync (filename, '        virtual void Deserialize(const std::string &json);\n\n'); 
+			}
+			if (objAdjectives[i] === 'Storable') {
+			  fs.appendFileSync (filename, '        bool DBExists(void);\n');
+			  fs.appendFileSync (filename, '        int  DBCreate(void);\n');
+			  fs.appendFileSync (filename, '        void DBUpdate(void);\n');
+			  fs.appendFileSync (filename, '        void DBDelete(void);\n');
+			  //fs.appendFileSync (filename, `        std::list<${objType}> DBFind(void);\n`);
+			}
+		}
+		//
+		//write out private 
+		//
+		fs.appendFileSync (filename, '    private:\n'); 
+		//
+		// setters and getters
+		//
+		for (var i = 0; i < memLength; i++) {
+		const member = objMembers[i];
+		fs.appendFileSync (filename, `        ${member.Type} m_${member.Name};\n`);
+
+		}
+		//
+		// close class
+		//
+		fs.appendFileSync (filename, '};\n');
+		fs.appendFileSync (filename, '#endif\n');
+	});
+    
 
 };
 
