@@ -1,0 +1,15 @@
+{
+  "name": "quikbldr",
+  "version": "0.0.1",
+  "description": "A quick C++ code generator",
+  "main": "app.js",
+  "dependencies": {
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "Kevin M Murphy",
+  "license": "ISC"
+}
