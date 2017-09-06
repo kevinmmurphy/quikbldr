@@ -11,3 +11,9 @@ before_install:
     - export PATH=$PATH:/opt/gradle/gradle-3.4.1/bin
     - mkdir -p ./src/objs/cpp
     - mkdir ./src/objs/headers
+    - cp ./include/jsoncpp.cpp ./src/objs/cpp
+
+script:
+    - npm install
+    - npm test
+    - gradle build
