@@ -105,70 +105,74 @@ function createHeader(classobj){
 function createImplementation(classobj){
     var objType = classobj.Type;
     const filename = `./src/objs/cpp/${objType}.cpp`;
-    fs.createWriteStream(filename);		
-    fs.appendFileSync (filename, `\n#include "${objType}.h"\n\n`);
+    const file = fs.createWriteStream(filename);		
+	
+	file.on('open', function(fd) {
+		
+		fs.appendFileSync (filename, `\n#include "${objType}.h"\n\n`);
 
-    const objAdjectives = classobj.Adjectives;
-    var adjLength = objAdjectives.length;
-    const objMembers = classobj.Members;
-    var memLength = objMembers.length;
-    //
-    // object constructor
-    //
-    fs.appendFileSync (filename, `${objType}::${objType}(): `); 
-    fs.appendFileSync (filename, `Object(std::string("${objType}"))`);
-    for (var i = 0; i < adjLength; i++) {
-        fs.appendFileSync (filename, `, I${objAdjectives[i]}()`);
-    }
-    fs.appendFileSync (filename, '{}\n\n');
-    //
-    // Interface implementaions
-    //
-    for (var i = 0; i < adjLength; i++) {
-        //
-        // ISerializable
-        //
-        if (objAdjectives[i] === 'Serializable') {
-            fs.appendFileSync (filename, `std::string ${objType}::Serialize(void) const {\n`);
-            fs.appendFileSync (filename, '    std::ostringstream out;\n');
-            fs.appendFileSync (filename, '    out << "{";\n');
-            fs.appendFileSync (filename, `    out << "\\\"Type\\\":\\\"" << mb_type <<  "\\\",";\n`);
-            fs.appendFileSync (filename, '    out << "\\\"Id\\\":\\\""   << mb_id   <<  "\\\"";\n');
-            for (var j = 0; j < memLength; j++) {
-                var member = objMembers[j];
-                if (member.Type === 'String'){
-		   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\\\"" << m_${member.Name} << "\\\"";\n`);
-                }
-                if (member.Type === 'Number'){
-		   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\" << m_${member.Name} << "";\n`);
-                }
-                if (member.Type === 'Bool'){
-		   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\" << m_${member.Name} << \"";\n`);
-                }
-	    }
-            fs.appendFileSync (filename, '    out << "}";\n');
-            fs.appendFileSync (filename, '    return out.str();\n');
-            fs.appendFileSync (filename, '}\n');
-            fs.appendFileSync (filename, `void ${objType}::Deserialize(const std::string &in){\n`);
-            fs.appendFileSync (filename, '    Json::Value root;\n    Json::Reader reader;\n    bool bParsed = reader.parse(in, root);\n');
-            fs.appendFileSync (filename, '    if(!bParsed){ throw; }\n');
-            fs.appendFileSync (filename, '    mb_type = root.get("Type", "").asString();\n');
-            fs.appendFileSync (filename, '    mb_id   = root.get("Id", "").asString();\n');
-            for (var j = 0; j < memLength; j++) {
-                var member = objMembers[j];
-                if (member.Type === 'String'){
-		   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asString();\n`);
-                }
-                if (member.Type === 'Number'){
-		   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asInt();\n`);
-                }
-                if (member.Type === 'Bool'){
-		   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asBool();\n`);
-                }
-	    }
-            fs.appendFileSync (filename, '}\n');
-        }
-    }
+		const objAdjectives = classobj.Adjectives;
+		var adjLength = objAdjectives.length;
+		const objMembers = classobj.Members;
+		var memLength = objMembers.length;
+		//
+		// object constructor
+		//
+		fs.appendFileSync (filename, `${objType}::${objType}(): `); 
+		fs.appendFileSync (filename, `Object(std::string("${objType}"))`);
+		for (var i = 0; i < adjLength; i++) {
+			fs.appendFileSync (filename, `, I${objAdjectives[i]}()`);
+		}
+		fs.appendFileSync (filename, '{}\n\n');
+		//
+		// Interface implementaions
+		//
+		for (var i = 0; i < adjLength; i++) {
+			//
+			// ISerializable
+			//
+			if (objAdjectives[i] === 'Serializable') {
+				fs.appendFileSync (filename, `std::string ${objType}::Serialize(void) const {\n`);
+				fs.appendFileSync (filename, '    std::ostringstream out;\n');
+				fs.appendFileSync (filename, '    out << "{";\n');
+				fs.appendFileSync (filename, `    out << "\\\"Type\\\":\\\"" << mb_type <<  "\\\",";\n`);
+				fs.appendFileSync (filename, '    out << "\\\"Id\\\":\\\""   << mb_id   <<  "\\\"";\n');
+				for (var j = 0; j < memLength; j++) {
+					var member = objMembers[j];
+					if (member.Type === 'String'){
+			   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\\\"" << m_${member.Name} << "\\\"";\n`);
+					}
+					if (member.Type === 'Number'){
+			   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\" << m_${member.Name} << "";\n`);
+					}
+					if (member.Type === 'Bool'){
+			   fs.appendFileSync (filename, `    out << ",\\\"${member.Name}\\\":\" << m_${member.Name} << \"";\n`);
+					}
+			}
+				fs.appendFileSync (filename, '    out << "}";\n');
+				fs.appendFileSync (filename, '    return out.str();\n');
+				fs.appendFileSync (filename, '}\n');
+				fs.appendFileSync (filename, `void ${objType}::Deserialize(const std::string &in){\n`);
+				fs.appendFileSync (filename, '    Json::Value root;\n    Json::Reader reader;\n    bool bParsed = reader.parse(in, root);\n');
+				fs.appendFileSync (filename, '    if(!bParsed){ throw; }\n');
+				fs.appendFileSync (filename, '    mb_type = root.get("Type", "").asString();\n');
+				fs.appendFileSync (filename, '    mb_id   = root.get("Id", "").asString();\n');
+				for (var j = 0; j < memLength; j++) {
+					var member = objMembers[j];
+					if (member.Type === 'String'){
+			   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asString();\n`);
+					}
+					if (member.Type === 'Number'){
+			   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asInt();\n`);
+					}
+					if (member.Type === 'Bool'){
+			   fs.appendFileSync (filename, `    m_${member.Name} = root.get("${member.Name}","").asBool();\n`);
+					}
+			}
+				fs.appendFileSync (filename, '}\n');
+			}
+		}
+	});
 };
 
 module.exports = {
