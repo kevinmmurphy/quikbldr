@@ -9,6 +9,12 @@ model {
                              "-I/Users/kmurphy/src/websocketpp", 
                              "-I/Users/kmurphy/src/boost_1_62_0", "-v"
          }
+		 if (toolChain in Gcc) {
+            cppCompiler.args "-std=c++11",
+			     "-I/home/travis/build/kevinmmurphy/quikbldr/include",
+                             "-I/Users/kmurphy/src/websocketpp", 
+                             "-I/Users/kmurphy/src/boost_1_62_0", "-v"
+         }
       }
    }
    components {
