@@ -17,5 +17,6 @@ script:
     - npm test
     - cat /home/travis/build/kevinmmurphy/quikbldr/src/objs/cpp/Choice.h
     - gradle build
-    - ./build/exe/main/main/main
+    - ls -laR ./build
+#    - ./build/exe/main/main/main
     
