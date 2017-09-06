@@ -4,15 +4,15 @@ node_js:
 
 before_install:
     - sudo apt-get -qq update
-    - sudo apt-get install -y openjdk-8-jdk wget unzip
-    - wget https://services.gradle.org/distributions/gradle-3.4.1-bin.zip
-    - sudo mkdir /opt/gradle
-    - sudo unzip -d /opt/gradle gradle-3.4.1-bin.zip
-    - export PATH=$PATH:/opt/gradle/gradle-3.4.1/bin
+#    - sudo apt-get install -y openjdk-8-jdk wget unzip
+#    - wget https://services.gradle.org/distributions/gradle-3.4.1-bin.zip
+#    - sudo mkdir /opt/gradle
+#    - sudo unzip -d /opt/gradle gradle-3.4.1-bin.zip
+#    - export PATH=$PATH:/opt/gradle/gradle-3.4.1/bin
     - mkdir -p ./src/objs/cpp
     - mkdir ./src/objs/headers
     - cp ./include/jsoncpp.cpp ./src/objs/cpp
-
+    - pwd
 script:
     - npm test
-    - gradle build
+    - gradle -d build
