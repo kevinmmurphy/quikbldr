@@ -14,6 +14,5 @@ before_install:
     - cp ./include/jsoncpp.cpp ./src/objs/cpp
 
 script:
-    - npm install
     - npm test
     - gradle build
