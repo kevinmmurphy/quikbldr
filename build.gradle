@@ -9,13 +9,19 @@ model {
                              "-I/Users/kmurphy/src/websocketpp", 
                              "-I/Users/kmurphy/src/boost_1_62_0", "-v"
          }
-         lib library: 'objs', linkage: 'static'
       }
    }
    components {
        objs(NativeLibrarySpec)
        server(NativeLibrarySpec)
-       main(NativeExecutableSpec)
+	   
+       main(NativeExecutableSpec){
+		binaries {
+			all {
+			 lib library: 'objs', linkage: 'static'
+			}
+		}
+	   }
        webserver(NativeExecutableSpec){
           binaries {
              all {
