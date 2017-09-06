@@ -28,6 +28,7 @@ model {
 			}
 		}
 	   }
+	   /*
        webserver(NativeExecutableSpec){
           binaries {
              all {
@@ -39,5 +40,6 @@ model {
              }
           }
        }
+	   */
    }
 }
