@@ -16,6 +16,8 @@ before_install:
 script:
     - npm test
     - gradle tasks
+    - gradle components
+    - gradle dependencies
     - gradle clean
     - gradle mainExecutable
 #    - ./build/exe/main/main/main
