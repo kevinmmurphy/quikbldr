@@ -21,6 +21,6 @@ script:
     - gradle components
     - gradle dependencies
     - gradle clean
-    - gradle mainExecutable
+    - gradle --build-cache assemble
 #    - ./build/exe/main/main/main
     
