@@ -17,10 +17,6 @@ before_install:
 
 script:
     - npm test
-    - gradle tasks
-    - gradle components
-    - gradle dependencies
-    - gradle cleanAssemble
-    - gradle assemble
+    - gradle --rerun-tasks assemble
 #    - ./build/exe/main/main/main
     
