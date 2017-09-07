@@ -20,7 +20,7 @@ script:
     - gradle tasks
     - gradle components
     - gradle dependencies
-    - gradle clean
-    - gradle --build-cache assemble
+    - gradle cleanAssemble
+    - gradle assemble
 #    - ./build/exe/main/main/main
     
