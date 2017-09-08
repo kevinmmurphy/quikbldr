@@ -1,10 +1,12 @@
 #ifndef H_OBJECT
 #define H_OBJECT
 
-
 #include <string>
 
-using std::string;
+typedef std::string String;
+typedef int Number;
+typedef bool Bool;
+
 
 class Object {
     public:

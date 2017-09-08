@@ -83,12 +83,11 @@ function createHeader(classobj){
 		//
 		fs.appendFileSync (filename, '    private:\n'); 
 		//
-		// setters and getters
+		// data members
 		//
 		for (var i = 0; i < memLength; i++) {
-		const member = objMembers[i];
-		fs.appendFileSync (filename, `        ${member.Type} m_${member.Name};\n`);
-
+			const member = objMembers[i];
+			fs.appendFileSync (filename, `        ${member.Type} m_${member.Name};\n`);
 		}
 		//
 		// close class

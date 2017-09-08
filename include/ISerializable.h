@@ -3,9 +3,6 @@
 
 #include <string>
 #include "json/json.h"
-typedef std::string String;
-typedef int Number;
-typedef bool Bool;
 
 
 class ISerializable {
