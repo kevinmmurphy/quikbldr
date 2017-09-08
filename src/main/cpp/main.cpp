@@ -8,12 +8,22 @@ int main (void) {
     int number(13777);
     Bool b(true);
 
+	std::cout << "Testing default values\n";
+	std::cout << "Testing string\n";
+	std::string testStr = g.GetStringField();
+	if (testStr.compare("UNASSIGNED") != 0)
+	{
+		std::cout << "String test failed!\n";
+		return 1;
+	}
+	
+	
     g.SetID("test");
     g.SetStringField(name);
     g.SetNumberField(number);
     g.SetBoolField(b);  
 	
-	std::string testStr = g.GetStringField();
+	testStr = g.GetStringField();
 	std::cout << "Testing getters and setters\n";
 	std::cout << "Testing string\n";
 	if (testStr.compare(name)!= 0)
