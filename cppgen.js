@@ -58,9 +58,9 @@ function createHeader(classobj){
 		// write out seters and getters
 		//
 		for (var i = 0; i < memLength; i++) {
-		const member = objMembers[i];
-		fs.appendFileSync (filename, `        void  Set${member.Name}(const ${member.Type} &arg){ m_${member.Name} = arg; }\n`);
-		fs.appendFileSync (filename, `        ${member.Type} Get${member.Name}(void){ return m_${member.Name};}\n\n`);
+			const member = objMembers[i];
+			fs.appendFileSync (filename, `        void  Set${member.Name}(const ${member.Type} &arg){ m_${member.Name} = arg; }\n`);
+			fs.appendFileSync (filename, `        ${member.Type} Get${member.Name}(void){ return m_${member.Name};}\n\n`);
 
 		}
 		//
@@ -69,8 +69,8 @@ function createHeader(classobj){
 		fs.appendFileSync (filename, '\n');
 		for (var i = 0; i < adjLength; i++) {
 			if (objAdjectives[i] === 'Serializable') {
-		  fs.appendFileSync (filename, '        virtual std::string Serialize(void) const;\n'); 
-		  fs.appendFileSync (filename, '        virtual void Deserialize(const std::string &json);\n\n'); 
+				fs.appendFileSync (filename, '        virtual std::string Serialize(void) const;\n'); 
+				fs.appendFileSync (filename, '        virtual void Deserialize(const std::string &json);\n\n'); 
 			}
 			if (objAdjectives[i] === 'Storable') {
 			  fs.appendFileSync (filename, '        bool DBExists(void);\n');
@@ -124,7 +124,18 @@ function createImplementation(classobj){
 		for (var i = 0; i < adjLength; i++) {
 			fs.appendFileSync (filename, `, I${objAdjectives[i]}()`);
 		}
-		fs.appendFileSync (filename, '{}\n\n');
+		//
+		// object constructor body
+		//
+		fs.appendFileSync (filename, '{\n');
+		for (var j = 0; j < memLength; j++) {
+			var member = objMembers[j];
+			if (member.hasOwnProperty('DefaultVal'))
+			{
+				fs.appendFileSync (filename, `    m_${member.Name} = ${member.DefaultVal};\n`);
+			}
+		}
+		fs.appendFileSync (filename, '}\n\n');
 		//
 		// Interface implementaions
 		//
