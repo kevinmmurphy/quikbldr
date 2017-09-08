@@ -10,19 +10,19 @@ typedef bool Bool;
 
 class Object {
     public:
-        Object(const string &type): mb_type(type), mb_id(Object::GenId()){}
+        Object(const String &type): mb_type(type), mb_id(Object::GenId()){}
         ~Object(){};
          
-        std::string GetID(void){ return mb_id; }
-	void SetID(const std::string &id){ mb_id = id;}
+        String GetID(void){ return mb_id; }
+	void SetID(const String &id){ mb_id = id;}
 
-        std::string GetType(void) const { return mb_type; }
+        String GetType(void) const { return mb_type; }
          
 
     protected:
-        static string GenId(void){ return std::string("UNIMPLEMENTED");}
-        string mb_type;
-        string mb_id;
+        static String GenId(void){ return String("UNIMPLEMENTED");}
+        String mb_type;
+        String mb_id;
 
 
 
