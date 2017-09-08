@@ -25,5 +25,6 @@ script:
     - gradle --version
     - gradle tasks model components assemble
 #    - gradle --rerun-tasks mainExecutable
+    - ls -R ./build
     - ./build/exe/main/main/main
     
