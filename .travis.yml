@@ -4,19 +4,27 @@ node_js:
 
 before_install:
     - sudo apt-get -qq update
+    # Install boost
+    - sudo apt-get install libboost-all-dev
+    # Install gradle 4.1
 #    - sudo apt-get install -y openjdk-8-jdk wget unzip
-#    - wget https://services.gradle.org/distributions/gradle-3.4.1-bin.zip
-#    - sudo mkdir /opt/gradle
-#    - sudo unzip -d /opt/gradle gradle-3.4.1-bin.zip
-#    - export PATH=$PATH:/opt/gradle/gradle-3.4.1/bin
+    - wget https://services.gradle.org/distributions/gradle-4.1-bin.zip
+    - sudo mkdir /opt/gradle
+    - sudo unzip -d /opt/gradle gradle-4.1-bin.zip
+    - export PATH=/opt/gradle/gradle-4.1/bin:$PATH
+    # node app.js needs these dirs and file, FIXME
     - mkdir -p ./src/objs/cpp
     - mkdir ./src/objs/headers
     - cp ./include/jsoncpp.cpp ./src/objs/cpp
-    - pwd
+    
+#    - rm -f $HOME/.gradle
+#    - pwd
+
 script:
     - npm test
-    - cat /home/travis/build/kevinmmurphy/quikbldr/src/objs/cpp/Choice.h
-    - gradle build
-    - ls -laR ./build
-#    - ./build/exe/main/main/main
+    - gradle --version
+    - gradle tasks model components assemble
+#    - gradle --rerun-tasks mainExecutable
+    - ls -R ./build
+    - ./build/exe/main/main/main
     

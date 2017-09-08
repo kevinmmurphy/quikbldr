@@ -32,6 +32,10 @@
         "Members": [{
                         "Type":"String",
                         "Name":"Choice"
+                    },
+                    {
+                        "Type":"String",
+                        "Name":"TimeMade"
                     }],
         "Adjectives": [
 		"Serializable"
