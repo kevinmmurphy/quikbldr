@@ -132,7 +132,12 @@ function createImplementation(classobj){
 			var member = objMembers[j];
 			if (member.hasOwnProperty('DefaultVal'))
 			{
-				fs.appendFileSync (filename, `    m_${member.Name} = ${member.DefaultVal};\n`);
+				if (member.Type === 'String'){
+					fs.appendFileSync (filename, `    m_${member.Name} = String(\"${member.DefaultVal}\");\n`);
+				}
+				else {
+					fs.appendFileSync (filename, `    m_${member.Name} = ${member.DefaultVal};\n`);
+				}
 			}
 		}
 		fs.appendFileSync (filename, '}\n\n');
