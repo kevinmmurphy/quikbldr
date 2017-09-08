@@ -23,10 +23,8 @@ model {
        server(NativeLibrarySpec)
 	   
        main(NativeExecutableSpec){
-		binaries {
-			all {
-			 lib library: 'objs', linkage: 'static'
-			}
+		binaries.all {
+			lib library: 'objs', linkage: 'static'
 		}
 	   }
 	   /*

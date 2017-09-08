@@ -23,7 +23,7 @@ before_install:
 script:
     - npm test
     - gradle --version
-    - gradle tasks
+    - gradle tasks model components assemble
 #    - gradle --rerun-tasks mainExecutable
 #    - ./build/exe/main/main/main
     
