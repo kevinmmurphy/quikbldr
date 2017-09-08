@@ -8,22 +8,44 @@ int main (void) {
     int number(13777);
     Bool b(true);
 
-    
     g.SetID("test");
     g.SetStringField(name);
     g.SetNumberField(number);
     g.SetBoolField(b);  
+	
+	std::string testStr = g.GetStringField();
+	std::cout << "Testing getters and setters\n";
+	std::cout << "Testing string\n";
+	if (testStr.compare(name)!= 0)
+	{
+		std::cout << "String test failed!\n";
+		return 1;
+	}
+	
+	int testNumber = g.GetNumberField();
+	std::cout << "Testing number\n";
+	if (testNumber != name)
+	{
+		std::cout << "Number test failed!\n";
+		return 1;
+	}
 
-    std::cout << "Serializing...\n";
+	bool testBool = g.GetBoolField();
+	std::cout << "Testing bool\n";
+	if (testBool != b)
+	{
+		std::cout << "Bool test failed!\n";
+		return 1;
+	}
+	
+    std::cout << "Testing Serialization\n";
     std::string out = g.Serialize();
-    std::cout << out << "\n";;
-    std::cout << "Deserializing...\n";
     g2.Deserialize(out);
-    std::cout << "Done Deserialize\n";
     std::string out2 = g2.Serialize();
-
-    std::cout << out2 << "\n";
-    std::cout << "\n";
-
-
+	if (out.compare(out2) != 0)
+	{
+		std::cout << "Bool test failed!\n";
+		return 1;	
+	}
+    std::cout << "Success\n";
 }
