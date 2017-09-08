@@ -23,6 +23,11 @@
 				"Type":"Bool",
 				"Name":"BoolField",
 				"DefaultVal":true
+		    },
+			{
+				"Type":"Bool",
+				"Name":"BoolField2",
+				"DefaultVal":false
 		    }
 		],
         "Adjectives": [

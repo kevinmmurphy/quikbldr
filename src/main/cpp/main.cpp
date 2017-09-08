@@ -32,6 +32,12 @@ int main (void) {
 		std::cout << "Bool test failed!\n";
 		return 1;
 	}
+	testb = g.GetBoolField2();
+	if (testb)
+	{
+		std::cout << "Bool test2 failed!\n";
+		return 1;
+	}
 	
     g.SetID("test");
     g.SetStringField(name);
