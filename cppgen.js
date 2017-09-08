@@ -17,7 +17,7 @@ function createLibInclude(model){
 		  console.log(`Appending file ${srcfile} to export header.\n`);
 		  appendFileToDest(srcfile, filename);
 	   }
-   }
+   };
 };
 
 function createHeader(classobj){
