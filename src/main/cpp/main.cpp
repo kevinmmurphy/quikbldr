@@ -17,6 +17,21 @@ int main (void) {
 		return 1;
 	}
 	
+	std::cout << "Testing number\n";
+	int testNumber = g.GetNumberField();
+	if (testNumber != 10)
+	{
+		std::cout << "Number test failed!\n";
+		return 1;
+	}
+	
+	std::cout << "Testing bool\n";
+	Bool testb = g.GetBoolField();
+	if (!testb)
+	{
+		std::cout << "Bool test failed!\n";
+		return 1;
+	}
 	
     g.SetID("test");
     g.SetStringField(name);
@@ -32,7 +47,7 @@ int main (void) {
 		return 1;
 	}
 	
-	int testNumber = g.GetNumberField();
+	testNumber = g.GetNumberField();
 	std::cout << "Testing number\n";
 	if (testNumber != number)
 	{

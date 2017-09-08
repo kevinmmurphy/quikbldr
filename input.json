@@ -16,11 +16,13 @@
 		    },
 		    {
 				"Type":"Number",
-				"Name":"NumberField"
+				"Name":"NumberField",
+				"DefaultVal":10
 		    },
 		    {
 				"Type":"Bool",
-				"Name":"BoolField"
+				"Name":"BoolField",
+				"DefaultVal":true
 		    }
 		],
         "Adjectives": [
