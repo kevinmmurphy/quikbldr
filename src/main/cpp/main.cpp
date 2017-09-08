@@ -24,7 +24,7 @@ int main (void) {
 	
 	int testNumber = g.GetNumberField();
 	std::cout << "Testing number\n";
-	if (testNumber != name)
+	if (testNumber != number)
 	{
 		std::cout << "Number test failed!\n";
 		return 1;
