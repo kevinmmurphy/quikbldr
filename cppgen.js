@@ -11,12 +11,13 @@ function createLibInclude(model){
    let filename = './src/objs/headers/Objects.h';
    let classes = model.Classes;
    const file = fs.createWriteStream(filename);	
-   file.on('open', function(fd) {   
-	   for (let i = 0; i < classes.length; i++){
-		  let srcfile = `./src/objs/cpp/${classes[i].Type}.h`;
-		  console.log(`Appending file ${srcfile} to export header.\n`);
-		  appendFileToDest(srcfile, filename);
-	   }
+   file.on('open', function(fd) { 
+		fs.appendFileSync (fd, `#include "Object.h"\n`);
+		for (let i = 0; i < classes.length; i++){
+			let srcfile = `./src/objs/cpp/${classes[i].Type}.h`;
+			console.log(`Appending file ${srcfile} to export header.\n`);
+			appendFileToDest(srcfile, fd);
+		}
    });
 };
 
