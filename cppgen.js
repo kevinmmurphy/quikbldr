@@ -217,7 +217,7 @@ function createMsgProcessor(model){
 	//
 	// create header file
 	//
-	const headername = "./src/src/cpp/MsgProcessor.h"
+	const headername = "./src/srv/cpp/MsgProcessor.h"
 	const header = fs.createWriteStream(headername);
 	header.on('open', function(fd) {
 		fs.appendFileSync (fd, '\n#ifndef _MSGPROCSR_\n#define _MSGPROCSR_\n');
@@ -281,6 +281,6 @@ module.exports = {
 		createHeader(classobj);
         console.log('Creating implementation.');
         createImplementation(classobj);
-		//createManager(classobj);
+		createManager(classobj);
     }
 };
