@@ -193,7 +193,6 @@ function createImplementation(classobj){
 };
 
 function createManager(classobj){
-	
 	var objType = classobj.Type;
 	//
 	// Create header
@@ -249,7 +248,7 @@ function createMsgProcessor(model){
 		//
 		// Implement Constructor
 		//
-		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::MsgProcessor(ObjectEventSender<SocketInfo> *sender) : m_sender(sender){\n`;
+		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::MsgProcessor(ObjectEventSender<SocketInfo> *sender) : m_sender(sender){\n`);
 		fs.appendFileSync (fd, `    m_sender->RegisterForObjectEvents(this);\n`);
 		fs.appendFileSync (fd, `\n}\n\n`);
 		//
