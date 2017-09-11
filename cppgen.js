@@ -222,6 +222,8 @@ function createMsgProcessor(model){
 	header.on('open', function(fd) {
 		fs.appendFileSync (fd, '\n#ifndef _MSGPROCSR_\n#define _MSGPROCSR_\n');
 		fs.appendFileSync (fd, `\n#include "SocketInfo.h"\n`);
+		fs.appendFileSync (fd, `\n#include "IObserver.hpp"\n`);
+		
 		fs.appendFileSync (fd, `class MsgProcessor: public IObjectEventReceiver<SocketInfo> {\n`);
 		fs.appendFileSync (fd, "    public:\n");
 		fs.appendFileSync (fd, "        MsgProcessor(ObjectEventSender<SocketInfo> *sender);\n");
