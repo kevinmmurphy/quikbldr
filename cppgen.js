@@ -35,7 +35,7 @@ function createHeader(classobj){
 		//
 		// inheritance includes
 		// 
-		fs.appendFileSync (filename, '#include "Object.h"\n');
+		fs.appendFileSync (fd, '#include "Object.h"\n');
 		for (var i = 0; i < adjLength; i++) {
 			fs.appendFileSync (fd, `#include "I${objAdjectives[i]}.h"\n`);
 		}
