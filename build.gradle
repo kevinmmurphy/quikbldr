@@ -20,7 +20,7 @@ model {
    components {
        objs(NativeLibrarySpec)
 	   
-       server(NativeLibrarySpec)
+       //srv(NativeLibrarySpec)
 	   
        main(NativeExecutableSpec){
 		binaries.all {

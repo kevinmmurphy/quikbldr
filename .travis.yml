@@ -14,7 +14,9 @@ before_install:
     - export PATH=/opt/gradle/gradle-4.1/bin:$PATH
     # node app.js needs these dirs and file, FIXME
     - mkdir -p ./src/objs/cpp
+    - mkdir -p ./src/srv/cpp
     - mkdir ./src/objs/headers
+    - mkdir ./src/srv/headers
     - cp ./include/jsoncpp.cpp ./src/objs/cpp   
 #    - rm -f $HOME/.gradle
 #    - pwd
@@ -24,6 +26,7 @@ script:
 #    - gradle --version
 #    - gradle tasks model components assemble
     - gradle assemble
-#    - ls -R ./build
     - ./build/exe/main/main
+    - cat ./src/srv/headers/*
+    - cat ./src/srv/cpp/*
     
