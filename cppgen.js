@@ -280,6 +280,6 @@ module.exports = {
 		createHeader(classobj);
         console.log('Creating implementation.');
         createImplementation(classobj);
-		createManager(classobj);
+		//createManager(classobj);
     }
 };
