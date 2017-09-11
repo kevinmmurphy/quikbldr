@@ -254,13 +254,13 @@ function createMsgProcessor(model){
 		//
 		// Implement Destructor
 		//
-		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::~MsgProcessor(){\n`;
+		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::~MsgProcessor(){\n`);
 		fs.appendFileSync (fd, `    m_sender->UnregisterForObjectEvents(this);\n`);
 		fs.appendFileSync (fd, `\n}\n\n`);
 		//
 		// Implement OnObjectEvent
 		//
-		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::OnObjectEvent(int e, buffer){\n`;
+		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::OnObjectEvent(int e, buffer){\n`);
 		fs.appendFileSync (fd, `\n}\n\n`);
 	});
 };
