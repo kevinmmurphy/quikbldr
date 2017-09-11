@@ -27,6 +27,6 @@ script:
 #    - gradle tasks model components assemble
     - gradle assemble
     - ./build/exe/main/main
-    - cat ./src/srv/headers/*
+#    - cat ./src/srv/headers/*
     - cat ./src/srv/cpp/*
     

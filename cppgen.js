@@ -226,10 +226,10 @@ function createMsgProcessor(model){
 		fs.appendFileSync (fd, "    public:\n");
 		fs.appendFileSync (fd, "        MsgProcessor(ObjectEventSender<SocketInfo> *sender);\n");
 		fs.appendFileSync (fd, "        ~MsgProcessor();\n");
-		fs.appendFileSync (fd, "        OnObjectEvent(int e, const &object);\n");
+		fs.appendFileSync (fd, "        OnObjectEvent(int e, const SocketInfo &object);\n");
 		fs.appendFileSync (fd, "    private:\n");
 		fs.appendFileSync (fd, "        ObjectEventSender<SocketInfo> *m_psender;\n");
-		fs.appendFileSync (fd, `\n}\n`);
+		fs.appendFileSync (fd, `}\n`);
 		fs.appendFileSync (fd, '#endif\n');
 	});
 	//
@@ -239,7 +239,7 @@ function createMsgProcessor(model){
     const file = fs.createWriteStream(filename);		
 	file.on('open', function(fd) {
 
-		fs.appendFileSync (fd, `\n#include "MsgProcessor.h"\n\n`);
+		fs.appendFileSync (fd, `\n#include "MsgProcessor.h"\n`);
 		for (let i = 0; i < classes.length; i++){
 			//
 			// Include manager class headers
@@ -250,19 +250,19 @@ function createMsgProcessor(model){
 		// Implement Constructor
 		//
 		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::MsgProcessor(ObjectEventSender<SocketInfo> *sender) : m_sender(sender){\n`);
-		fs.appendFileSync (fd, `    m_sender->RegisterForObjectEvents(this);\n`);
-		fs.appendFileSync (fd, `\n}\n\n`);
+		fs.appendFileSync (fd, `    m_sender->RegisterForObjectEvents(this);`);
+		fs.appendFileSync (fd, `\n}\n`);
 		//
 		// Implement Destructor
 		//
 		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::~MsgProcessor(){\n`);
-		fs.appendFileSync (fd, `    m_sender->UnregisterForObjectEvents(this);\n`);
-		fs.appendFileSync (fd, `\n}\n\n`);
+		fs.appendFileSync (fd, `    m_sender->UnregisterForObjectEvents(this);`);
+		fs.appendFileSync (fd, `\n}\n`);
 		//
 		// Implement OnObjectEvent
 		//
 		fs.appendFileSync (fd, `\n\nvoid MsgProcessor::OnObjectEvent(int e, buffer){\n`);
-		fs.appendFileSync (fd, `\n}\n\n`);
+		fs.appendFileSync (fd, `\n}\n`);
 	});
 };
 
